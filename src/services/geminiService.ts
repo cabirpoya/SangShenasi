@@ -6,8 +6,13 @@ export async function analyzeGemstone(
   metadata: UploadMetadata,
   apiKey?: string
 ): Promise<AnalysisResult> {
-  const key = apiKey || process.env.GEMINI_API_KEY;
+  // Check multiple sources for the API key to ensure compatibility across environments (AI Studio, Vercel, Local)
+  const key = apiKey || 
+              process.env.GEMINI_API_KEY || 
+              (import.meta.env && import.meta.env.VITE_GEMINI_API_KEY);
+
   if (!key) {
+    console.error('Gemini API key is missing. Please set GEMINI_API_KEY or VITE_GEMINI_API_KEY in your environment.');
     throw new Error('Gemini API key is missing');
   }
   const ai = new GoogleGenAI({ apiKey: key });

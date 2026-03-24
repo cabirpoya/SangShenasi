@@ -13,7 +13,9 @@ import {
   Moon,
   Star,
   Info,
-  Shield
+  Shield,
+  Settings,
+  X
 } from 'lucide-react';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { ImageUploader } from './components/ImageUploader';
@@ -39,6 +41,8 @@ const AppContent: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
+  const [localApiKey, setLocalApiKey] = useState('');
 
   const handleAnalyze = async () => {
     setError(null);
@@ -52,7 +56,7 @@ const AppContent: React.FC = () => {
     setLoading(true);
 
     try {
-      const analysis = await analyzeGemstone(images, metadata);
+      const analysis = await analyzeGemstone(images, metadata, localApiKey);
       setResult(analysis);
     } catch (err) {
       console.error('Analysis error:', err);
@@ -76,9 +80,76 @@ const AppContent: React.FC = () => {
             <Shield className="w-4 h-4" />
             <span className="text-sm font-medium">{t.subtitle}</span>
           </div>
-          <LanguageToggle />
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => setShowSettings(!showSettings)}
+              className="p-1.5 rounded-lg hover:bg-white/10 text-white/80 transition-colors"
+              title="Settings"
+            >
+              <Settings className="w-4 h-4" />
+            </button>
+            <LanguageToggle />
+          </div>
         </div>
       </div>
+
+      {/* Discreet Settings Modal */}
+      {showSettings && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="bg-slate-50 px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-slate-700 font-semibold">
+                <Key className="w-4 h-4 text-[#0071BC]" />
+                {t.apiKeyLabel}
+              </div>
+              <button 
+                onClick={() => setShowSettings(false)}
+                className="p-1 rounded-lg hover:bg-slate-200 text-slate-400 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="p-6 space-y-4">
+              <p className="text-sm text-slate-500 leading-relaxed">
+                {t.apiKeyDescription}
+              </p>
+              <div className="space-y-2">
+                <input
+                  type="password"
+                  placeholder={t.apiKeyPlaceholder}
+                  value={localApiKey}
+                  onChange={(e) => setLocalApiKey(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#009FDA]/50 focus:border-[#009FDA] transition-all"
+                  dir="ltr"
+                />
+                <div className="flex justify-between items-center">
+                  <a
+                    href="https://aistudio.google.com/apikey"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-[#0071BC] hover:underline flex items-center gap-1"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    {t.getApiKey}
+                  </a>
+                  <button
+                    onClick={() => setShowSettings(false)}
+                    className="px-4 py-2 bg-[#0071BC] text-white rounded-lg text-sm font-medium hover:bg-[#005a96] transition-colors"
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+              <div className="p-3 rounded-lg bg-blue-50 border border-blue-100 flex items-start gap-2">
+                <Info className="w-4 h-4 text-[#0071BC] mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-slate-600">
+                  {t.apiKeyInfo}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Container */}
       <div className="relative z-10 container mx-auto px-4 py-8 max-w-7xl">
