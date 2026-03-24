@@ -1,0 +1,7 @@
+{
+  "name": "POYAGEMAi",
+  "description": "Advanced AI-powered gemstone analysis and identification system.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

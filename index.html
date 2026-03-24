@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="POYAGEMAi - سامانه پیشرفته تحلیل گوهرشناسی و تشخیص قدمت با هوش مصنوعی" />
+    <meta name="keywords" content="گوهرشناسی, سنگ قیمتی, تحلیل سنگ, یاقوت, زمرد, الماس, سنگ ماه تولد, Gemology, Gemstone Analysis" />
+    <meta name="author" content="POYAGEMAi" />
+    <meta name="theme-color" content="#0f172a" />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="POYAGEMAi - تحلیل هوشمند گوهرشناسی" />
+    <meta property="og:description" content="سامانه پیشرفته تحلیل گوهرشناسی و تشخیص قدمت با هوش مصنوعی جمینای" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>" />
+    
+    <title>POYAGEMAi | پویاجِمای - تحلیل هوشمند گوهرشناسی</title>
+    
+    <style>
+      /* Critical CSS for initial load */
+      body {
+        margin: 0;
+        background-color: #0f172a;
+        color: white;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      
+      #root {
+        min-height: 100vh;
+      }
+      
+      /* Loading screen */
+      .initial-loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      }
+      
+      .loader-content {
+        text-align: center;
+      }
+      
+      .loader-gem {
+        font-size: 4rem;
+        animation: bounce 1s ease-in-out infinite;
+      }
+      
+      .loader-text {
+        margin-top: 1rem;
+        color: #f59e0b;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+      
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <!-- Initial loading state -->
+      <div class="initial-loader">
+        <div class="loader-content">
+          <div class="loader-gem">💎</div>
+          <div class="loader-text">POYAGEMAi</div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
